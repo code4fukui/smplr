@@ -1,0 +1,83 @@
+<!DOCTYPE html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width"><link rel="icon" href="data:">
+<button id=btninit>init</button>
+<button id=btnplay>play</button>
+<button id=btnplay2>play2</button>
+<button id=btnstop2>stop2</button>
+<button id=btndrum>drum</button>
+<button id=btnsfont>sound font</button>
+<button id=btnsfontstop>stop sound font</button>
+
+<script type="module">
+import { SplendidGrandPiano, Soundfont } from "./smplr.js";
+import { DrumMachine, getDrumMachineNames } from "./smplr.js";
+
+btnplay.disabled = true;
+btnplay2.disabled = true;
+btnstop2.disabled = true;
+btndrum.disabled = true;
+btnsfont.disabled = true;
+btnsfontstop.disabled = true;
+
+btninit.onclick = async () => {
+  btninit.disabled = true;
+  const context = new AudioContext();
+
+  const piano = new SplendidGrandPiano(context, { decayTime: 0.5 });
+  await piano.loaded();
+  btnplay.disabled = false;
+  btnplay.onclick = async () => {
+    piano.start({ note: "C4", velocity: 80, time: 0, duration: 1 });
+  };
+  btnplay2.disabled = false;
+  btnstop2.disabled = false;
+  btnplay2.onclick = () => {
+    const stopNote = piano.start({ note: "D4" });
+    btnstop2.onclick = () => {
+      stopNote();
+    };
+  };
+
+  // drum
+  const instruments = getDrumMachineNames();
+  const drums = new DrumMachine(context, { instrument: "TR-808" });
+  await drums.loaded();
+  btndrum.disabled = false;
+
+  btndrum.onclick = async () => {
+    drums.start({ note: "kick" });
+
+    // Drum samples could have variations:
+    const now = context.currentTime;
+    const samples = drums.sampleNames;
+    let idx = 0;
+    for (let i = 0; i < samples.length; i++) {
+      const sample = samples[i];
+      console.log(sample);
+      drums.getVariations(sample).forEach((variation, index) => {
+        console.log(sample + " " + variation);
+        drums.start({ note: variation, time: now + idx++ * .5 });
+      });
+    }
+  };
+
+  // sound font
+  const soundfont = new Soundfont(context, {
+    // https://github.com/code4fukui/smplr/blob/main/src/soundfont/soundfont-instruments.ts
+    //instrument: "clavinet",
+    instrument: "cello",
+    //kit: "MusyngKite", // "MusyngKite" is used by default if not specified https://www.kvraudio.com/forum/viewtopic.php?t=351893 CC BY SA
+    kit: "FluidR3_GM", // https://musical-artifacts.com/artifacts/635 public domain
+  });
+  await soundfont.loaded();
+  btnsfont.disabled = false;
+  btnsfont.onclick = () => {
+    const stop = soundfont.start({ note: "C4", duration: 20 });
+    btnsfontstop.disabled = false;
+    btnsfontstop.onclick = () => {
+      stop();
+      btnsfontstop.disabled = true;
+    }
+  };
+
+};
+</script>
