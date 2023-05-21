@@ -1,13 +1,11 @@
 # smplr
 
-[![npm version](https://img.shields.io/npm/v/smplr)](https://www.npmjs.com/package/smplr)
-
 > `smplr` is a collection of sampled instruments for Web Audio API ready to be used with no setup required.
 
 Examples:
 
 ```js
-import { Soundfont } from "smplr";
+import { Soundfont } from "https://code4fukui.github.io/smplr/smplr.js";
 
 const context = new AudioContext();
 const marimba = new Soundfont(context, { instrument: "marimba" });
@@ -15,7 +13,7 @@ marimba.start({ note: 60, velocity: 80 });
 ```
 
 ```js
-import { DrumMachine } from "smplr";
+import { DrumMachine } from "https://code4fukui.github.io/smplr/smplr.js";
 
 const context = new AudioContext();
 const dm = new DrumMachine(context);
@@ -23,7 +21,7 @@ dm.start({ note: "kick" });
 ```
 
 ```js
-import { SplendidGrandPiano, Reverb } from "smplr";
+import { SplendidGrandPiano, Reverb } from "https://code4fukui.github.io/smplr/smplr.js";
 
 const context = new AudioContext();
 const piano = new SplendidGrandPiano(context);
@@ -57,7 +55,7 @@ Samples are published at: https://github.com/danigb/samples
 All instruments follows the same pattern: `new Instrument(context, options)`. For example:
 
 ```js
-import { SplendidGrandPiano, Soundfont } from "smplr";
+import { SplendidGrandPiano, Soundfont } from "https://code4fukui.github.io/smplr/smplr.js";
 
 const context = new AudioContext();
 const piano = new SplendidGrandPiano(context, { decayTime: 0.5 });
@@ -159,7 +157,7 @@ An packed version of [DattorroReverbNode](https://github.com/khoin/DattorroRever
 Use `output.addEffect(name, effect, mix)` to connect an effect using a send bus:
 
 ```js
-import { Reverb, SplendidGrandPiano } from "smplr";
+import { Reverb, SplendidGrandPiano } from "https://code4fukui.github.io/smplr/smplr.js";
 const reverb = new Reverb(context);
 const piano = new SplendidGrandPiano(context, { volume });
 piano.output.addEffect("reverb", reverb, 0.2);
@@ -178,7 +176,7 @@ piano.output.sendEffect("reverb", 0.5);
 An audio buffer sampler.
 
 ```js
-import { Sampler } from "smplr";
+import { Sampler } from "https://code4fukui.github.io/smplr/smplr.js";
 
 const samples = {
   kick: "https://danigb.github.io/samples/drum-machines/808-mini/kick.m4a",
@@ -194,7 +192,7 @@ A Soundfont player. By default it loads audio from Benjamin Gleitzman's package 
 [pre-rendered sound fonts](https://github.com/gleitz/midi-js-soundfonts).
 
 ```js
-import { Soundfont, getSoundfontNames, getSoundfontKits } from "smplr";
+import { Soundfont, getSoundfontNames, getSoundfontKits } from "https://code4fukui.github.io/smplr/smplr.js";
 
 const marimba = new Soundfont(new AudioContext(), { instrument: "marimba" });
 marimba.start({ note: "C4" });
@@ -230,7 +228,7 @@ A sampled acoustic piano. It uses Steinway samples with 4 velocity layers from
 [SplendidGrandPiano](https://github.com/sfzinstruments/SplendidGrandPiano)
 
 ```js
-import { SplendidGrandPiano } from "smplr";
+import { SplendidGrandPiano } from "https://code4fukui.github.io/smplr/smplr.js";
 
 const piano = new SplendidGrandPiano(new AudioContext());
 
@@ -242,7 +240,7 @@ piano.start({ note: "C4" });
 A sampled electric pianos. Samples from https://github.com/sfzinstruments/GregSullivan.E-Pianos
 
 ```js
-import { ElectricPiano, getElectricPianoNames } from "smplr";
+import { ElectricPiano, getElectricPianoNames } from "https://code4fukui.github.io/smplr/smplr.js";
 
 const instruments = getElectricPianoNames(); // => ["CP80", "PianetT", "WurlitzerEP200"]
 
@@ -267,7 +265,7 @@ Available instruments:
 Samples from [The Versilian Community Sample Library](https://github.com/sgossner/VCSL)
 
 ```js
-import { Mallet, getMalletNames } from "smplr";
+import { Mallet, getMalletNames } from "https://code4fukui.github.io/smplr/smplr.js";
 
 const instruments = getMalletNames();
 
@@ -281,7 +279,7 @@ const mallet = new Mallet(new AudioContext(), {
 Sampled drum machines. Samples from different sources:
 
 ```js
-import { DrumMachine, getDrumMachineNames } from "smplr";
+import { DrumMachine, getDrumMachineNames } from "https://code4fukui.github.io/smplr/smplr.js";
 
 const instruments = getDrumMachineNames();
 
